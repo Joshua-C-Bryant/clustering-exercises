@@ -137,6 +137,8 @@ def min_max_scaler(train, valid, test):
     test[num_vars] = scaler.transform(test[num_vars])
     return scaler, train, valid, test
 
+# # # # # Mall Functions # # # # #
+
 def outlier_function(df, cols, k):
 	#function to detect and handle oulier using IQR rule
     for col in df[cols]:
@@ -152,6 +154,11 @@ def get_mall_customers(sql):
 	    url = get_db_url('mall_customers')
 	    mall_df = pd.read_sql(sql, url, index_col='customer_id')
 	    return mall_df
+
+def train_validate_test_split(df):
+    train_and_validate, test = train_test_split(df, train_size=0.8, random_state=123)
+    train, validate = train_test_split(train_and_validate, train_size=0.75, random_state=123)
+    return train, validate, test
 
 def wrangle_mall_df():
     
